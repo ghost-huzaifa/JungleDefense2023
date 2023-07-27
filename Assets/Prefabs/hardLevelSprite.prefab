@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4523125069337364451}
   - component: {fileID: 8538261222688230647}
   m_Layer: 0
-  m_Name: Enemy_Sprite
-  m_TagString: enemy
+  m_Name: hardLevelSprite
+  m_TagString: hardLevelEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -363,7 +363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1046567130}
-  - component: {fileID: 1046567129}
+  - component: {fileID: 1046567131}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -371,20 +371,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1046567129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046567128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4016cd2f5afdac149abcb1ac7046419e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 1289206554997732615, guid: 0745e19dd21e51d42a06859948309c7f, type: 3}
-  Enemy_spawn_rate: 1
 --- !u!4 &1046567130
 Transform:
   m_ObjectHideFlags: 0
@@ -400,6 +386,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1046567131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046567128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4016cd2f5afdac149abcb1ac7046419e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  easyLevelEnemy: {fileID: 1289206554997732615, guid: dd84937b047f0f64c89b2c95613a4f3d, type: 3}
+  mediumLevelEnemy: {fileID: 1289206554997732615, guid: d3bcd4a1b27419a48a1e94d16e39f2ae, type: 3}
+  hardLevelEnemy: {fileID: 1289206554997732615, guid: 0745e19dd21e51d42a06859948309c7f, type: 3}
+  Enemy_spawn_rate: 1
 --- !u!1 &1284769982
 GameObject:
   m_ObjectHideFlags: 0
