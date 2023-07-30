@@ -7,10 +7,7 @@ TagManager:
   - rightBoundary
   - leftBoundary
   - enemy
-  - ball
-  - easyLevelEnemy
-  - mediumLevelEnemy
-  - hardLevelEnemy
+  - bullet
   layers:
   - Default
   - TransparentFX

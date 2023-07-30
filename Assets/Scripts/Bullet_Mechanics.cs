@@ -16,7 +16,7 @@ public class Bullet_Mechanics : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Abs(transform.position.y) > 6.0f)
+        if (Mathf.Abs(transform.position.y) > 6.0f || Mathf.Abs(transform.position.x) > 3.0f)
             Destroy(gameObject);
     }
 

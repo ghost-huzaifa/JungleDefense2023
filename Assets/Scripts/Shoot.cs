@@ -6,13 +6,21 @@ public class Shoot : MonoBehaviour
 {
     public GameObject bullet;
     public Transform firePoint;
+    public float fireRate = 1f;
+
+    private float tempTime = 0;
 
     
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (tempTime > (1/fireRate) && Input.touchCount > 0)
         {
             shoot();
+            tempTime = 0f;
+        }
+        else
+        {
+            tempTime += Time.deltaTime;
         }
     }
 

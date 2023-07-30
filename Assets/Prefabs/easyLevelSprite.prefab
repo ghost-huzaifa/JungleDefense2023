@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8538261222688230647}
   m_Layer: 0
   m_Name: easyLevelSprite
-  m_TagString: easyLevelEnemy
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289206554997732615}
   m_LocalRotation: {x: -1, y: 0, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 0.16, y: 4.07, z: -0.03}
+  m_LocalPosition: {x: 0.16, y: 4.07, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -115,7 +115,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -146,4 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c538bbcb48631e142b005a0e72122711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpeed: 1
+  EnemySpeed: 0.5
+  recoilSpeed: 1
+  enemyHealth: 100
+  spawnLocation: {x: 1.3323373, y: -7.0717278}
+  isShoot: 0

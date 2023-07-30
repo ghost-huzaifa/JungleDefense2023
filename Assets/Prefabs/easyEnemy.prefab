@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4523125069337364451}
   - component: {fileID: 8538261222688230647}
   m_Layer: 0
-  m_Name: hardLevelSprite
+  m_Name: easyEnemy
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289206554997732615}
   m_LocalRotation: {x: -1, y: 0, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 0.16, y: 4.07, z: 0}
+  m_LocalPosition: {x: 0.16, y: 4.07, z: -0.03}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.0766139, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.06818819, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -115,7 +115,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c538bbcb48631e142b005a0e72122711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpeed: 0.5
-  recoilSpeed: 1
-  enemyHealth: 0
-  spawnLocation: {x: 0, y: 0}
+  EnemySpeed: 0.4
+  recoilSpeed: 0.2
+  enemyHealth: 100
+  spawnLocation: {x: -3.4905772, y: -3.662672, z: 0}
   isShoot: 0

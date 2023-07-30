@@ -7,56 +7,68 @@ public class EnemySpawner : MonoBehaviour
     public GameObject easyLevelEnemy, mediumLevelEnemy, hardLevelEnemy;
     public float Enemy_spawn_rate = 1;
 
-    private float time, Ellipse_a = 7.5f, Ellipse_b = 4f;
+    private GameObject enemy;
+    private float tempTime, health, Ellipse_a = 7.5f, Ellipse_b = 4f;
     private int sign = -1, enemyCount = 0;
-    private Vector2 spawn_location = Vector2.zero;
+    private Vector3 spawnLocation = Vector3.zero;
 
     void Start()
     {
-        time = 0f;   
+        tempTime = 0f;
+        enemy.transform.Rotate(0, 0, 0);    
     }
+
 
     void Update()
     {
-        if (time > Enemy_spawn_rate)
+        if (tempTime > Enemy_spawn_rate)
         {
             create_enemy();
-            time = 0f;
+            tempTime = 0f;
         }
         else
         {
-            time += Time.deltaTime;
+            tempTime += Time.deltaTime;
         }
     }
 
     private void create_enemy()
     {
-        makeRandomSpawnLocation();
-
-        if (enemyCount % 5 == 0 && enemyCount %10 != 0)
+        Debug.Log(enemyCount);
+        if (enemyCount % 5 == 0 && enemyCount % 10 != 0)
         {
-            Instantiate(mediumLevelEnemy, new Vector3(spawn_location.x, spawn_location.y, 0), new Quaternion(0, 0, 0, 0));
-
+            enemy = mediumLevelEnemy;
+            health = 200;
         }
         else if (enemyCount % 10 == 0 && enemyCount > 0)
         {
-            Instantiate(hardLevelEnemy, new Vector3(spawn_location.x, spawn_location.y, 0), new Quaternion(0, 0, 0, 0));
+            enemy = hardLevelEnemy;
+            health = 400;
         }
         else
-            Instantiate(easyLevelEnemy, new Vector3(spawn_location.x, spawn_location.y, 0), new Quaternion(0, 0, 0, 0));
+        {
+            enemy = easyLevelEnemy;
+            health = 100;
+        }
+        makeRandomSpawnLocation();
+
+        setEnemyAttributes();
+
+        Instantiate(enemy, spawnLocation, new Quaternion(0, 0, 0, 0));
         enemyCount++;
     }
-
     private void makeRandomSpawnLocation()
     {
-        spawn_location.y = Random.Range(-7.5f, 7.5f);
-        spawn_location.x = sign * (Ellipse_b / Ellipse_a) * Mathf.Sqrt(Mathf.Pow(Ellipse_a, 2) - Mathf.Pow(spawn_location.y, 2));
+        spawnLocation.y = Random.Range(-7.5f, 7.5f);
+        spawnLocation.x = sign * (Ellipse_b / Ellipse_a) * Mathf.Sqrt(Mathf.Pow(Ellipse_a, 2) - Mathf.Pow(spawnLocation.y, 2));
         sign = -sign;
     }
 
-    private void spawnEnemy(string name)
+    private void setEnemyAttributes()
     {
-        Instantiate(GameObject.Find(name), new Vector3(spawn_location.x, spawn_location.y, 0), new Quaternion(0, 0, 0, 0));
+        enemy.GetComponent<EnemyMechanics>().spawnLocation = spawnLocation;
+        enemy.GetComponent<EnemyMechanics>().enemyHealth = health;
     }
+
 
 }
