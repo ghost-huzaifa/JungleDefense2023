@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         tempTime = 0f;
-        enemy.transform.Rotate(0, 0, 0);    
+        create_enemy();
     }
 
 

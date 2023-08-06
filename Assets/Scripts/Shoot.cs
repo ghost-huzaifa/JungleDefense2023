@@ -13,7 +13,7 @@ public class Shoot : MonoBehaviour
     
     void Update()
     {
-        if (tempTime > (1/fireRate) && Input.touchCount > 0)
+        if (tempTime > (1/fireRate) && (Input.touchCount > 0 || Input.GetMouseButtonUp(0)))
         {
             shoot();
             tempTime = 0f;
