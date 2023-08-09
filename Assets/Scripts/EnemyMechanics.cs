@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyMechanics : MonoBehaviour
 {
     //Enemy Attributes
-    public float EnemySpeed = 0.5f, recoilDuration = 1.0f, enemyHealth = 100, attackRate = 0.5f;
+    public float EnemySpeed = 0.5f, recoilDuration = 0.1f, recoilAcceleration = 2, recoilSpeed = 2, enemyHealth = 100, attackRate = 0.5f, bulletDamage = 50;
     public Vector3 spawnLocation;
     public string enemyType;
     public bool isShoot = false, isMoving = true, isAttacking = false;
@@ -21,7 +21,6 @@ public class EnemyMechanics : MonoBehaviour
         //Get Castle Location
         castle = GameObject.FindGameObjectWithTag("castle");
         castleLocation = castle.transform.position;
-        Debug.Log(castleLocation);
     }
     void Update()
     {
@@ -60,7 +59,8 @@ public class EnemyMechanics : MonoBehaviour
         {
             isShoot = true;
             tempTime = 0;
-            enemyHealth -= 40;
+            step = recoilSpeed * Time.deltaTime;
+            enemyHealth -= bulletDamage;
             if (enemyHealth <= 0)
                 Destroy(gameObject);
         }
@@ -68,6 +68,7 @@ public class EnemyMechanics : MonoBehaviour
         //Check if enemy is hit by castle, then stops moving and deal damage to castle
         else if (collision.gameObject.tag == "castle")
         {
+            
             stopMoving();
             isAttacking = true;
             attack(collision.gameObject);
@@ -78,7 +79,8 @@ public class EnemyMechanics : MonoBehaviour
     void moveEnemy()
     {
         if (isShoot)
-            stopMoving();
+            moveRecoil();
+        //stopMoving();
         else
             moveTowardsCastle();
     }
@@ -92,6 +94,13 @@ public class EnemyMechanics : MonoBehaviour
     void stopMoving()
     {
         isMoving = false;
+    }
+
+    void moveRecoil()
+    {
+        isMoving = true;
+        step /= recoilAcceleration; //Decelerate
+        transform.position = Vector3.MoveTowards(transform.position, spawnLocation, step);
     }
 
     //Dealt damage to castle on each hit after certain time

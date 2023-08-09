@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -1, y: 0, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 0.16, y: 4.07, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,11 +98,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c538bbcb48631e142b005a0e72122711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpeed: 0.2
-  recoilDuration: 1
+  EnemySpeed: 0.1
+  recoilDuration: 0.3
+  recoilAcceleration: 1.2
+  recoilSpeed: 2
   enemyHealth: 400
   attackRate: 1
-  spawnLocation: {x: -3.9964168, y: -0.31737947, z: 0}
+  bulletDamage: 50
+  spawnLocation: {x: -3.9359744, y: -1.3365278, z: 0}
   enemyType: hardEnemy
   isShoot: 0
   isMoving: 1

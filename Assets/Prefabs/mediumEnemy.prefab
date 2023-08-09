@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3522458438492785642}
   - component: {fileID: 8538261222688230647}
   - component: {fileID: 2746056783276574648}
+  - component: {fileID: -1398198425426924788}
   m_Layer: 0
   m_Name: mediumEnemy
   m_TagString: enemy
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -1, y: 0, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 0.16, y: 4.07, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,11 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c538bbcb48631e142b005a0e72122711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySpeed: 0.3
-  recoilDuration: 1
+  EnemySpeed: 0.15
+  recoilDuration: 0.3
+  recoilAcceleration: 1.2
+  recoilSpeed: 2
   enemyHealth: 200
   attackRate: 1
-  spawnLocation: {x: 3.6824574, y: -2.9285476, z: 0}
+  bulletDamage: 50
+  spawnLocation: {x: 3.9976199, y: 0.25868225, z: 0}
   enemyType: mediumEnemy
   isShoot: 0
   isMoving: 1
@@ -248,3 +252,24 @@ PolygonCollider2D:
       - {x: 0.39, y: -2.23}
       - {x: 0.48, y: -2.24}
   m_UseDelaunayMesh: 0
+--- !u!95 &-1398198425426924788
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289206554997732615}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 18ec34614e778864da495231aaf807d1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
