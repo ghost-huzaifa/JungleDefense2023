@@ -1,37 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyMechanics : MonoBehaviour
 {
-    public float EnemySpeed = 0.5f, recoilSpeed = 1.0f, enemyHealth = 100;
+    //Enemy Attributes
+    public float EnemySpeed = 0.5f, recoilDuration = 1.0f, enemyHealth = 100, attackRate = 0.5f;
     public Vector3 spawnLocation;
+    public string enemyType;
+    public bool isShoot = false, isMoving = true, isAttacking = false;
 
-    private float recoilDuration = 1.0f, tempTime = 0, step;
-    public bool isShoot = false;
-
-    Vector3 templeLocation = Vector3.zero;
+    //Script Variables
+    private float tempTime = 0, step;
+    GameObject castle;
+    Vector3 castleLocation = new  Vector3(1,0,0);
 
     void Start()
     {
-        templeLocation = GameObject.Find("Gun_Sprite").transform.position;
+        //Get Castle Location
+        castle = GameObject.FindGameObjectWithTag("castle");
+        castleLocation = castle.transform.position;
+        Debug.Log(castleLocation);
     }
     void Update()
     {
-        if (isShoot == true)
+        //Check if enemy is being shoot, if yes, stop moving for recoilDuration
+        if (isShoot)
         {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.316f, 0.316f);
             tempTime += Time.deltaTime;
             if (tempTime > recoilDuration)
             {
+                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
                 isShoot = false;
+                isMoving = true;
                 tempTime = 0;
             }
         }
-        moveEnemy();
+
+        //Check if enemy is moving or attacking
+        if (isMoving)
+            moveEnemy();
+        else if (isAttacking)
+        {
+            tempTime += Time.deltaTime;
+            if (tempTime > (1/attackRate))
+            {
+                attack(castle);
+                tempTime = 0;
+            }
+        }   
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
+        //Check if enemy is hit by bullet, and deal damage to enemy
         if (collision.gameObject.tag == "bullet")
         {
             isShoot = true;
@@ -40,26 +64,51 @@ public class EnemyMechanics : MonoBehaviour
             if (enemyHealth <= 0)
                 Destroy(gameObject);
         }
+        
+        //Check if enemy is hit by castle, then stops moving and deal damage to castle
+        else if (collision.gameObject.tag == "castle")
+        {
+            stopMoving();
+            isAttacking = true;
+            attack(collision.gameObject);
+        }
+        Debug.Log("Hitted: " + collision.gameObject.name);
     }
 
     void moveEnemy()
     {
         if (isShoot)
-            moveRecoil();
+            stopMoving();
         else
-            moveTowardsTemple();
+            moveTowardsCastle();
     }
-
-    void moveTowardsTemple()
+    
+    void moveTowardsCastle()
     {
         step = EnemySpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, templeLocation, step);
+        transform.position = Vector3.MoveTowards(transform.position, castleLocation, step);
     }
 
-    void moveRecoil()
+    void stopMoving()
     {
-        step = recoilSpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, spawnLocation, step);
-        
+        isMoving = false;
+    }
+
+    //Dealt damage to castle on each hit after certain time
+    public void attack(GameObject castle)
+    {
+         switch(enemyType)
+         {
+             case "easyEnemy":
+                 castle.GetComponent<HealthBar>().decreaseHealthbar(50);
+                 break;
+             case "mediumEnemy":
+                castle.GetComponent<HealthBar>().decreaseHealthbar(75);
+                break;
+             case "hardEnemy":
+                castle.GetComponent<HealthBar>().decreaseHealthbar(100);
+                break;
+         }
+        Debug.Log("Castle Health: " + castle.GetComponent<HealthBar>().healthBarSprite.fillAmount);
     }
 }

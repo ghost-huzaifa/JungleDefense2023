@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShooterAttributes : MonoBehaviour
+public class ShooterAttributes
 {
     private Sprite shooterSprite;
     private float minAngle = 0;     //inclusive

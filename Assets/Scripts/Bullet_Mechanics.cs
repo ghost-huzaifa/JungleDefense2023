@@ -16,14 +16,19 @@ public class Bullet_Mechanics : MonoBehaviour
 
     void Update()
     {
+        if ((transform.position.y > 0.5f || transform.position.y < -0.4f) || Mathf.Abs(transform.position.x) > 0.6f)
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
         if (Mathf.Abs(transform.position.y) > 6.0f || Mathf.Abs(transform.position.x) > 3.0f)
             Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "enemy")
+        {
             Destroy(gameObject);
+        }
     }
 
 

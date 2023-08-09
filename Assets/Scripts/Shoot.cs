@@ -9,7 +9,6 @@ public class Shoot : MonoBehaviour
     public float fireRate = 1f;
 
     private float tempTime = 0;
-
     
     void Update()
     {
@@ -26,6 +25,7 @@ public class Shoot : MonoBehaviour
 
     private void shoot()
     {
+        bullet.GetComponent<SpriteRenderer>().enabled = false;
         Instantiate(bullet, firePoint.position, firePoint.rotation);
     }
 }

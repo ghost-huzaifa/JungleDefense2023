@@ -8,15 +8,16 @@ TagManager:
   - leftBoundary
   - enemy
   - bullet
+  - castle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Foreground
   - Water
   - UI
-  - 
-  - 
+  - Castle
+  - Bullet
   - 
   - 
   - 
@@ -44,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ForeGround
+    uniqueID: 3582347499
     locked: 0

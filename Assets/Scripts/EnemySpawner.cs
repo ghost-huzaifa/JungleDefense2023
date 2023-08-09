@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public float Enemy_spawn_rate = 1;
 
     private GameObject enemy;
-    private float tempTime, health, Ellipse_a = 7.5f, Ellipse_b = 4f;
+    private float tempTime, health, attackRate, Ellipse_a = 7.5f, Ellipse_b = 4f;
     private int sign = -1, enemyCount = 0;
     private Vector3 spawnLocation = Vector3.zero;
 
@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if (tempTime > Enemy_spawn_rate)
+        if (tempTime > (1/Enemy_spawn_rate))
         {
             create_enemy();
             tempTime = 0f;
@@ -66,8 +66,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void setEnemyAttributes()
     {
-        enemy.GetComponent<EnemyMechanics>().spawnLocation = spawnLocation;
-        enemy.GetComponent<EnemyMechanics>().enemyHealth = health;
+        EnemyMechanics enemyMechanics = enemy.GetComponent<EnemyMechanics>();
+        enemyMechanics.spawnLocation = spawnLocation;
+        enemyMechanics.enemyHealth = health;
+        enemyMechanics.enemyType = enemy.name;
+        enemyMechanics.attackRate = 1;
     }
 
 

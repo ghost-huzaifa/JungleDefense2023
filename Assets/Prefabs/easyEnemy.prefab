@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5051201551484625772}
   - component: {fileID: 3522458438492785642}
-  - component: {fileID: 4523125069337364451}
   - component: {fileID: 8538261222688230647}
+  - component: {fileID: 2391835115029876476}
   m_Layer: 0
   m_Name: easyEnemy
   m_TagString: enemy
@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289206554997732615}
+  serializedVersion: 2
   m_LocalRotation: {x: -1, y: 0, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 0.16, y: 4.07, z: -0.03}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0.16, y: 4.07, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3522458438492785642
 SpriteRenderer:
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.06818819, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c3066747a0b41e34f804e2b75a374162, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -86,7 +86,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &4523125069337364451
+--- !u!114 &8538261222688230647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289206554997732615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c538bbcb48631e142b005a0e72122711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemySpeed: 0.2
+  recoilDuration: 1
+  enemyHealth: 100
+  attackRate: 1
+  spawnLocation: {x: 3.957417, y: 1.0914545, z: 0}
+  enemyType: easyEnemy
+  isShoot: 0
+  isMoving: 1
+  isAttacking: 0
+--- !u!60 &2391835115029876476
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,8 +142,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -130,24 +151,45 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0.5773587}
-      - {x: -0.5, y: -0.28866667}
-      - {x: 0.5, y: -0.28866667}
+    - - {x: 0.5, y: -2.1599998}
+      - {x: 0.5, y: -1.68}
+      - {x: 0.44, y: -1.42}
+      - {x: 0.34, y: -0.88}
+      - {x: 0.32, y: -0.48}
+      - {x: 0.35999998, y: -0.34}
+      - {x: 0.53999996, y: -0.32}
+      - {x: 0.96, y: -0.17999999}
+      - {x: 1.26, y: -0.06}
+      - {x: 1.66, y: 0.29999998}
+      - {x: 1.8, y: 0.52}
+      - {x: 1.8, y: 0.88}
+      - {x: 1.78, y: 0.97999996}
+      - {x: 1.52, y: 1.4599999}
+      - {x: 1.42, y: 1.5999999}
+      - {x: 1.02, y: 2.02}
+      - {x: 0.84, y: 2.1599998}
+      - {x: 0.68, y: 2.26}
+      - {x: 0.35999998, y: 2.44}
+      - {x: 0, y: 2.56}
+      - {x: -0.62, y: 2.56}
+      - {x: -0.91999996, y: 2.48}
+      - {x: -1.52, y: 2.22}
+      - {x: -1.74, y: 2.08}
+      - {x: -2.24, y: 1.5999999}
+      - {x: -2.46, y: 1.18}
+      - {x: -2.5, y: 1.04}
+      - {x: -2.5, y: 0.59999996}
+      - {x: -2.28, y: 0.26}
+      - {x: -1.9799999, y: -0.04}
+      - {x: -1.78, y: -0.16}
+      - {x: -1.14, y: -0.38}
+      - {x: -1.06, y: -0.52}
+      - {x: -0.97999996, y: -1.02}
+      - {x: -1.16, y: -1.74}
+      - {x: -1.16, y: -2.04}
+      - {x: -1.12, y: -2.1399999}
+      - {x: -0.91999996, y: -2.34}
+      - {x: -0.74, y: -2.3799999}
+      - {x: 0.12, y: -2.3799999}
+      - {x: 0.32, y: -2.36}
   m_UseDelaunayMesh: 0
---- !u!114 &8538261222688230647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1289206554997732615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c538bbcb48631e142b005a0e72122711, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemySpeed: 0.4
-  recoilSpeed: 0.2
-  enemyHealth: 100
-  spawnLocation: {x: -3.4905772, y: -3.662672, z: 0}
-  isShoot: 0
