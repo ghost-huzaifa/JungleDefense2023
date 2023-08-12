@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Shoot : MonoBehaviour
 {
-    public GameObject bullet;
+    public GameObject bullet, fireBall;
     public Transform firePoint;
     public float fireRate = 1f;
 
@@ -18,8 +19,7 @@ public class Shoot : MonoBehaviour
         if (tempTime > (1/fireRate) && (Input.touchCount > 0 || Input.GetMouseButtonUp(0)))
         {
             worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(worldMousePosition);
-            if (!((worldMousePosition.x > 1.44 && worldMousePosition.x < 2.44) && (worldMousePosition.y > -3.88 && worldMousePosition.y < -2.88)))
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
                 shoot();
                 tempTime = 0f;
@@ -33,7 +33,16 @@ public class Shoot : MonoBehaviour
 
     private void shoot()
     {
-        bullet.GetComponent<SpriteRenderer>().enabled = false;
-        Instantiate(bullet, firePoint.position, firePoint.rotation);
+        Powerups powerupsInfo = GameObject.FindGameObjectWithTag("powerups").GetComponent<Powerups>();
+        if (powerupsInfo.fireBallTrigger)
+        {
+            Instantiate(fireBall, firePoint.position, firePoint.rotation);
+            powerupsInfo.fireBallTrigger = false;
+        }
+        else
+        {
+            Instantiate(bullet, firePoint.position, firePoint.rotation);
+        }
+
     }
 }

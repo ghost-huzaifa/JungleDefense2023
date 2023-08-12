@@ -7,6 +7,7 @@ using UnityEngine;
 public class Bullet_Mechanics : MonoBehaviour
 {
     public float speed = 20f;
+    public bool isFireBall = false;
     public Rigidbody2D rb;
 
     void Start()
@@ -16,6 +17,11 @@ public class Bullet_Mechanics : MonoBehaviour
 
     void Update()
     {
+        //continuously rotate the bullet along z-axis
+        if (gameObject.tag != "fireBall" && gameObject.GetComponent<SpriteRenderer>().enabled)
+            transform.Rotate(0, 0, 1f);
+
+
         if ((transform.position.y > 0.5f || transform.position.y < -0.4f) || Mathf.Abs(transform.position.x) > 0.6f)
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -23,9 +29,9 @@ public class Bullet_Mechanics : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "enemy")
+        if (collision.gameObject.tag == "enemy" && !(gameObject.tag == "fireBall"))
         {
             Destroy(gameObject);
         }

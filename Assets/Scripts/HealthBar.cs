@@ -7,8 +7,16 @@ public class HealthBar : MonoBehaviour
 {
     public Image healthBarSprite;
     public float reduceSpeed = 0.5f;
-    private float target = 1, maxHealth = 1000f, currentHealth = 1000f;
+    private float target = 1, maxHealth, currentHealth;
 
+    private void Start()
+    {
+        if (gameObject.tag == "castle")
+        {
+            maxHealth = 1000f;
+            currentHealth = 1000f;
+        }
+    }
     public void decreaseHealthbar(float damage)
     {
         currentHealth -= damage;
@@ -17,10 +25,16 @@ public class HealthBar : MonoBehaviour
 
     void Update()
     {
-            healthBarSprite.fillAmount = Mathf.MoveTowards(healthBarSprite.fillAmount, target, reduceSpeed * Time.deltaTime);
+        healthBarSprite.fillAmount = Mathf.MoveTowards(healthBarSprite.fillAmount, target, reduceSpeed * Time.deltaTime);
         if (healthBarSprite.fillAmount <= 0)
         {
             Destroy(gameObject);
         }
+    }
+    
+    public void setMaxHealth(float maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
     }
 }

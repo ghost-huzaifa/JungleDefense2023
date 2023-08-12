@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  isFireBall: 0
   rb: {fileID: -5074372968819156052}
 --- !u!50 &-5074372968819156052
 Rigidbody2D:
@@ -157,9 +158,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1969418, y: 0.058013797}
   serializedVersion: 2
-  m_Radius: 0.49999997
+  m_Radius: 2.2486863

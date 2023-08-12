@@ -6,35 +6,73 @@ using UnityEngine.UI;
 
 public class Powerups : MonoBehaviour
 {
-    public float cooldownTime = 5;
-    public GameObject lighteningButton;
+    public float lighteningCooldownTime = 5, fireBallCooldownTime = 7;
+    public GameObject lighteningButton, fireBallButton;
+    public bool fireBallTrigger = false;
 
-    private float tempTime;
-    private bool isCooldown = false;
+    private float lighteningTempTime, fireBallTempTime;
+    private bool isLighteningCooldown = false, isFireBallCooldown = false;
     private void Start()
     {
         lighteningButton = GameObject.FindGameObjectWithTag("lighteningButton");
-        tempTime = 0;
+        fireBallButton = GameObject.FindGameObjectWithTag("fireBallButton");
+        lighteningTempTime = 0;
+        fireBallTempTime = 0;
     }
 
     private void Update()
     {
-        tempTime += Time.deltaTime;
-        if (tempTime >= cooldownTime)
+        lighteningTempTime += Time.deltaTime;
+        fireBallTempTime += Time.deltaTime;
+        if (lighteningTempTime >= lighteningCooldownTime)
         {
-            tempTime = 0;
-            isCooldown = false;
+            lighteningTempTime = 0;
+            isLighteningCooldown = false;
             lighteningButton.GetComponent<Button>().interactable = true;
+        }
+        if (fireBallTempTime >= fireBallCooldownTime)
+        {
+            fireBallTempTime = 0;
+            isFireBallCooldown = false;
+            fireBallButton.GetComponent<Button>().interactable = true;
         }
     }
     public void lighteningPowerup()
     {
-        if (!isCooldown)
+        if (!isLighteningCooldown)
         {
-            int animationNo = Random.Range(1, 3);
-            gameObject.GetComponent<Animator>().SetTrigger("Trigger" + animationNo.ToString());
-            isCooldown = true;
+            dealLighteningDamage();
+            isLighteningCooldown = true;
             lighteningButton.GetComponent<Button>().interactable = false;
+            makeLighteningAnimation();
         }
     }
+
+    public void makeLighteningAnimation()
+    {
+        int animPattern = Random.Range(1, 2);
+        gameObject.GetComponent<Animator>().SetTrigger("Pattern" + animPattern);
+    }
+
+    private void dealLighteningDamage()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            enemy.GetComponent<EnemyMechanics>().dealLighteningDamage();
+        }
+    }    
+
+    public void fireBallPowerup()
+    {
+        if (!isFireBallCooldown)
+        {
+            fireBallTrigger = true;
+            isFireBallCooldown = true;
+            fireBallButton.GetComponent<Button>().interactable = false;
+            //makeFireBallAnimation();
+        }
+    }
+
+    
 }

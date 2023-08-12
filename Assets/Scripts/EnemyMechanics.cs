@@ -12,7 +12,9 @@ public class EnemyMechanics : MonoBehaviour
     public bool isShoot = false, isMoving = true, isAttacking = false;
 
     //Script Variables
+    private HealthBar healthBar;
     private float tempTime = 0, step;
+    Powerups powerupsInfo;
     GameObject castle;
     Vector3 castleLocation = new  Vector3(1,0,0);
 
@@ -21,6 +23,10 @@ public class EnemyMechanics : MonoBehaviour
         //Get Castle Location
         castle = GameObject.FindGameObjectWithTag("castle");
         castleLocation = castle.transform.position;
+
+        //Get Healthbar script
+        healthBar = gameObject.GetComponent<HealthBar>();
+        healthBar.setMaxHealth(enemyHealth);
     }
     void Update()
     {
@@ -46,34 +52,41 @@ public class EnemyMechanics : MonoBehaviour
             tempTime += Time.deltaTime;
             if (tempTime > (1/attackRate))
             {
-                attack(castle);
+                if (castle)     //Check if castle is destroyed
+                    attack(castle);
                 tempTime = 0;
             }
         }   
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Check if enemy is hit by bullet, and deal damage to enemy
-        if (collision.gameObject.tag == "bullet")
+        switch (collision.gameObject.tag)
         {
-            isShoot = true;
-            tempTime = 0;
-            step = recoilSpeed * Time.deltaTime;
-            enemyHealth -= bulletDamage;
-            if (enemyHealth <= 0)
+            //Check if enemy is hit by fireball, then destroy enemy
+            case "fireBall":
                 Destroy(gameObject);
-        }
-        
-        //Check if enemy is hit by castle, then stops moving and deal damage to castle
-        else if (collision.gameObject.tag == "castle")
-        {
-            
-            stopMoving();
-            isAttacking = true;
-            attack(collision.gameObject);
-        }
-        Debug.Log("Hitted: " + collision.gameObject.name);
+                break;
+            //Check if enemy is hit by bullet, and deal damage to enemy
+            case "bullet":
+                isShoot = true;
+                tempTime = 0;
+                step = recoilSpeed * Time.deltaTime;
+                enemyHealth -= bulletDamage;
+                healthBar.decreaseHealthbar(bulletDamage);
+                if (enemyHealth <= 0)
+                    Destroy(gameObject);
+                break;
+            //Check if enemy is hit by castle, then stops moving and deal damage to castle
+            case "castle":
+                stopMoving();
+                isAttacking = true;
+                if (collision.gameObject)   //Check if castle is destroyed
+                {
+                    attack(collision.gameObject);
+                }
+                break;
+         }
     }
 
     void moveEnemy()
@@ -118,6 +131,28 @@ public class EnemyMechanics : MonoBehaviour
                 castle.GetComponent<HealthBar>().decreaseHealthbar(100);
                 break;
          }
-        Debug.Log("Castle Health: " + castle.GetComponent<HealthBar>().healthBarSprite.fillAmount);
+    }
+
+    public void dealLighteningDamage()
+    {
+        float damage = 0;
+        isShoot = true;
+        tempTime = 0;
+        step = recoilSpeed * Time.deltaTime;
+        
+        switch (enemyType)
+        {
+            case "easyEnemy":
+            case "mediumEnemy":
+                damage = 25;
+                break;
+            case "hardEnemy":
+                damage = 75;
+                break;
+        }
+        enemyHealth -= damage;
+        healthBar.decreaseHealthbar(damage);
+        if (enemyHealth <= 0)
+            Destroy(gameObject);
     }
 }
