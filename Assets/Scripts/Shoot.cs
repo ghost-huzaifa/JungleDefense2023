@@ -13,7 +13,13 @@ public class Shoot : MonoBehaviour
     private Vector3 worldMousePosition;
     private float tempTime = 0;
 
-   
+    Shooter shooterInfo;
+
+    void Start()
+    {
+         shooterInfo = GameObject.FindGameObjectWithTag("shooter").GetComponent<Shooter>();
+    }
+
     void Update()
     {
         if (tempTime > (1/fireRate) && (Input.touchCount > 0 || Input.GetMouseButtonUp(0)))
@@ -21,6 +27,8 @@ public class Shoot : MonoBehaviour
             worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (!EventSystem.current.IsPointerOverGameObject())
             {
+                shooterInfo.makeRotationAndroid();
+                shooterInfo.checkSprite();
                 shoot();
                 tempTime = 0f;
             }

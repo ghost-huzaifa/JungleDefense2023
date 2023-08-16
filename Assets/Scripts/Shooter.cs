@@ -28,15 +28,11 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
-        //makeRotationAndroid();
-
         makeRotationPC();
-
-        checkSprite();
     }
 
     //check which sprite to use according to the rotation of the shooter
-    void checkSprite()
+    public void checkSprite()
     {
         
         for (int i = 1; i < ballShooter.Length; i++)
@@ -54,7 +50,7 @@ public class Shooter : MonoBehaviour
 
 
     //rotate the shooter according to the mouse position for android
-    void makeRotationAndroid()
+    public void makeRotationAndroid()
     {
         Touch touch = Input.GetTouch(0);
 

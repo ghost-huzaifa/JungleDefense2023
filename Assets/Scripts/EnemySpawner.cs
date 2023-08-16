@@ -34,7 +34,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void create_enemy()
     {
-        Debug.Log(enemyCount);
         if (enemyCount % 5 == 0 && enemyCount % 10 != 0)
         {
             enemy = mediumLevelEnemy;

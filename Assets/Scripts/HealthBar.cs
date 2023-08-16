@@ -5,14 +5,18 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    public Sprite mediumHealthbar, lowHealthbar;
     public Image healthBarSprite;
     public float reduceSpeed = 0.5f;
+
+    private GameObject healthbarImage;
     private float target = 1, maxHealth, currentHealth;
 
     private void Start()
     {
         if (gameObject.tag == "castle")
         {
+            healthbarImage = GameObject.FindGameObjectWithTag("healthbarBackground");
             maxHealth = 1000f;
             currentHealth = 1000f;
         }
@@ -29,6 +33,17 @@ public class HealthBar : MonoBehaviour
         if (healthBarSprite.fillAmount <= 0)
         {
             Destroy(gameObject);
+        }
+        if (gameObject.tag == "castle")
+        {
+            if (healthBarSprite.fillAmount <= 0.66f)
+            {
+                healthbarImage.GetComponent<Image>().sprite = mediumHealthbar;
+            }
+            if (healthBarSprite.fillAmount <= 0.33f)
+            {
+                healthbarImage.GetComponent<Image>().sprite = lowHealthbar;
+            }
         }
     }
     

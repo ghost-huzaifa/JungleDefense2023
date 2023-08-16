@@ -13,6 +13,8 @@ TagManager:
   - fireBallButton
   - fireBall
   - powerups
+  - healthbarBackground
+  - shooter
   layers:
   - Default
   - TransparentFX
