@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class EnemyMechanics : MonoBehaviour
 {
     //Enemy Attributes
-    public float EnemySpeed = 0.5f, recoilDuration = 0.1f, recoilAcceleration = 2, recoilSpeed = 2, enemyHealth = 100, attackRate = 0.5f, bulletDamage = 50;
+    public float EnemySpeed, recoilDuration = 0.1f, recoilAcceleration = 2, recoilSpeed = 2, enemyHealth, attackRate = 0.5f, bulletDamage = 30;
     public Vector3 spawnLocation;
     public string enemyType;
-    public bool isShoot = false, isMoving = true, isAttacking = false;
+    public bool isShoot = false, isMoving = true, isAttacking = false, isDying = false;
+    public GameObject healthBarObj;
+    public Collider2D enemyCollider;
 
     //Script Variables
     private HealthBar healthBar;
@@ -31,7 +34,7 @@ public class EnemyMechanics : MonoBehaviour
     void Update()
     {
         //Check if enemy is being shoot, if yes, stop moving for recoilDuration
-        if (isShoot)
+        if (isShoot && !isDying)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.316f, 0.316f);
             tempTime += Time.deltaTime;
@@ -45,9 +48,9 @@ public class EnemyMechanics : MonoBehaviour
         }
 
         //Check if enemy is moving or attacking
-        if (isMoving)
+        if (isMoving && !isDying)
             moveEnemy();
-        else if (isAttacking)
+        else if (isAttacking && !isDying)
         {
             tempTime += Time.deltaTime;
             if (tempTime > (1/attackRate))
@@ -65,7 +68,7 @@ public class EnemyMechanics : MonoBehaviour
         {
             //Check if enemy is hit by fireball, then destroy enemy
             case "fireBall":
-                Destroy(gameObject);
+                die();
                 break;
             //Check if enemy is hit by bullet, and deal damage to enemy
             case "bullet":
@@ -75,7 +78,7 @@ public class EnemyMechanics : MonoBehaviour
                 enemyHealth -= bulletDamage;
                 healthBar.decreaseHealthbar(bulletDamage);
                 if (enemyHealth <= 0)
-                    Destroy(gameObject);
+                    die();
                 break;
             //Check if enemy is hit by castle, then stops moving and deal damage to castle
             case "castle":
@@ -119,18 +122,7 @@ public class EnemyMechanics : MonoBehaviour
     //Dealt damage to castle on each hit after certain time
     public void attack(GameObject castle)
     {
-         switch(enemyType)
-         {
-             case "easyEnemy":
-                 castle.GetComponent<HealthBar>().decreaseHealthbar(50);
-                 break;
-             case "mediumEnemy":
-                castle.GetComponent<HealthBar>().decreaseHealthbar(75);
-                break;
-             case "hardEnemy":
-                castle.GetComponent<HealthBar>().decreaseHealthbar(100);
-                break;
-         }
+        castle.GetComponent<HealthBar>().decreaseHealthbar(50);
     }
 
     public void dealLighteningDamage()
@@ -142,17 +134,32 @@ public class EnemyMechanics : MonoBehaviour
         
         switch (enemyType)
         {
-            case "easyEnemy":
-            case "mediumEnemy":
-                damage = 25;
-                break;
-            case "hardEnemy":
-                damage = 75;
-                break;
+            case "mushroom":    damage = 30;    break;
+            case "bush":        damage = 30;    break;
+            case "trashcan":    damage = 15;    break;
+            case "pinecord":    damage = 15;    break;
+            case "cat":         damage = 40;    break;
+            default:            damage = 30;    break;
         }
         enemyHealth -= damage;
         healthBar.decreaseHealthbar(damage);
         if (enemyHealth <= 0)
-            Destroy(gameObject);
+            die();
+    }
+
+    public void die()
+    {
+        //set controller of animator to death Effect
+        gameObject.GetComponent<Animator>().SetBool("Die", true);
+        healthBarObj.SetActive(false);
+        //Disable all type of collider on enemy
+        enemyCollider.enabled = false;
+        isDying = true;
+        isMoving = false;
+    }
+
+    public void destroy()
+    {
+        Destroy(gameObject);
     }
 }

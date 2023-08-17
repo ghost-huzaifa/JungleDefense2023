@@ -32,7 +32,7 @@ public class HealthBar : MonoBehaviour
         healthBarSprite.fillAmount = Mathf.MoveTowards(healthBarSprite.fillAmount, target, reduceSpeed * Time.deltaTime);
         if (healthBarSprite.fillAmount <= 0)
         {
-            Destroy(gameObject);
+            gameObject.GetComponent<HealthBar>().enabled = false;
         }
         if (gameObject.tag == "castle")
         {

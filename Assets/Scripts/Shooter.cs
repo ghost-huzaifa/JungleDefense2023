@@ -9,12 +9,12 @@ public class Shooter : MonoBehaviour
 {
     public Transform firePoint;
 
-    //import all shooter sprites as reference
-    public Sprite[] sprites = new Sprite[8];
+    ////import all shooter sprites as reference
+    //public Sprite[] sprites = new Sprite[8];
 
 
-    //create all instances of our shooter
-    private ShooterAttributes[] ballShooter = new ShooterAttributes[8]; 
+    ////create all instances of our shooter
+    //private ShooterAttributes[] ballShooter = new ShooterAttributes[8]; 
 
 
     //variables used in the script
@@ -23,30 +23,34 @@ public class Shooter : MonoBehaviour
 
     void Start()
     {
-        setShooterAttributes();
+        transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
     }
 
     void Update()
     {
+        //makeRotationAndroid();
+
         makeRotationPC();
+
+        //checkSprite();
     }
 
     //check which sprite to use according to the rotation of the shooter
-    public void checkSprite()
-    {
+    //void checkSprite()
+    //{
         
-        for (int i = 1; i < ballShooter.Length; i++)
-        {
-            if (angle >= ballShooter[i].getMinAngle() && angle < ballShooter[i].getMaxAngle())
-            {
-                gameObject.GetComponent<SpriteRenderer>().sprite = ballShooter[i].getSprite();
-            }
-            else if ((angle >= ballShooter[0].getMinAngle() && angle < 360) || (angle >= 0 && angle < ballShooter[0].getMaxAngle()))
-            {
-                gameObject.GetComponent<SpriteRenderer>().sprite = ballShooter[0].getSprite();
-            }
-        }
-    }
+    //    for (int i = 1; i < ballShooter.Length; i++)
+    //    {
+    //        if (angle >= ballShooter[i].getMinAngle() && angle < ballShooter[i].getMaxAngle())
+    //        {
+    //            gameObject.GetComponent<SpriteRenderer>().sprite = ballShooter[i].getSprite();
+    //        }
+    //        else if ((angle >= ballShooter[0].getMinAngle() && angle < 360) || (angle >= 0 && angle < ballShooter[0].getMaxAngle()))
+    //        {
+    //            gameObject.GetComponent<SpriteRenderer>().sprite = ballShooter[0].getSprite();
+    //        }
+    //    }
+    //}
 
 
     //rotate the shooter according to the mouse position for android
@@ -60,7 +64,7 @@ public class Shooter : MonoBehaviour
         Vector3 direction = touchPosition - transform.position;
         angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        firePoint.transform.rotation = Quaternion.AngleAxis((float)angle - 90, Vector3.forward);
+        transform.rotation = Quaternion.AngleAxis((float)angle - 90, Vector3.forward);
     }
 
     //rotate the shooter according to the mouse position for PC
@@ -75,27 +79,27 @@ public class Shooter : MonoBehaviour
             angle += 360;
         }
 
-        firePoint.transform.rotation = Quaternion.AngleAxis((float)angle - 90, Vector3.forward);
+        transform.rotation = Quaternion.AngleAxis((float)angle - 90, Vector3.forward);
     }
 
 
-    void setShooterAttributes()
-    {
-        for (int i = 0; i < ballShooter.Length; i++)
-        {
-            ballShooter[i] = new ShooterAttributes();
-            ballShooter[i].setSprite(sprites[i]);
+    //void setShooterAttributes()
+    //{
+    //    for (int i = 0; i < ballShooter.Length; i++)
+    //    {
+    //        ballShooter[i] = new ShooterAttributes();
+    //        ballShooter[i].setSprite(sprites[i]);
             
-            float minAngle = (i * 45) - 22.5f;
+    //        float minAngle = (i * 45) - 22.5f;
 
-            if (minAngle < 0)
-            {
-                minAngle += 360;
-            }
-            float maxAngle = (i * 45) + 22.5f;
+    //        if (minAngle < 0)
+    //        {
+    //            minAngle += 360;
+    //        }
+    //        float maxAngle = (i * 45) + 22.5f;
 
-            ballShooter[i].setMinAngle(minAngle);
-            ballShooter[i].setMaxAngle(maxAngle);
-        }
-    }
+    //        ballShooter[i].setMinAngle(minAngle);
+    //        ballShooter[i].setMaxAngle(maxAngle);
+    //    }
+    //}
 }

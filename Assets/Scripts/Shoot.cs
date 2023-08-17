@@ -28,7 +28,6 @@ public class Shoot : MonoBehaviour
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 shooterInfo.makeRotationAndroid();
-                shooterInfo.checkSprite();
                 shoot();
                 tempTime = 0f;
             }
