@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemySpeed: 0.2
-  recoilDuration: 0.15
+  recoilDuration: 0.2
   recoilAcceleration: 1.2
   recoilSpeed: 2
   enemyHealth: 150

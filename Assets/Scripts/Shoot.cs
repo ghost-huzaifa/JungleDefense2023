@@ -50,6 +50,7 @@ public class Shoot : MonoBehaviour
         {
             Instantiate(bullet, firePoint.position, firePoint.rotation);
         }
-
+        powerupsInfo.tutorialShoot.SetActive(false);
+        powerupsInfo.isFirstShoot = false;
     }
 }

@@ -102,13 +102,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemySpeed: 0.25
-  recoilDuration: 0.15
+  recoilDuration: 0.2
   recoilAcceleration: 1.2
   recoilSpeed: 2
   enemyHealth: 100
   attackRate: 1
   bulletDamage: 50
-  spawnLocation: {x: -3.347465, y: 4.1055555, z: 0}
+  spawnLocation: {x: -3.1387918, y: 4.649087, z: 0}
   enemyType: mushroom
   isShoot: 0
   isMoving: 1

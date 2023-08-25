@@ -6,11 +6,12 @@ using UnityEngine;
 public class EnemyMechanics : MonoBehaviour
 {
     //Enemy Attributes
-    public float EnemySpeed, recoilDuration = 0.1f, recoilAcceleration = 2, recoilSpeed = 2, enemyHealth, attackRate = 0.5f, bulletDamage = 30;
+    public float EnemySpeed, recoilDuration = 0.1f, recoilAcceleration = 2, recoilSpeed = 2, enemyHealth, attackRate = 0.5f, bulletDamage = 30, maxHealth;
     public Vector3 spawnLocation;
     public string enemyType;
-    public bool isShoot = false, isMoving = true, isAttacking = false, isDying = false;
+    public bool isShoot = false, isMoving = true, isAttacking = false, isDying = false, isGameOver = false;
     public GameObject healthBarObj;
+    public Controller controller;
     public Collider2D enemyCollider;
 
     //Script Variables
@@ -29,36 +30,57 @@ public class EnemyMechanics : MonoBehaviour
         //Get Healthbar script
         healthBar = gameObject.GetComponent<HealthBar>();
         healthBar.setMaxHealth(enemyHealth);
+
+        //Get Game Controller Script
+        controller = GameObject.FindGameObjectWithTag("GameController").GetComponent<Controller>();
+
+        //Set Maximum Health
+        maxHealth = enemyHealth;
     }
     void Update()
     {
-        //Check if enemy is being shoot, if yes, stop moving for recoilDuration
-        if (isShoot && !isDying)
+        if (isGameOver)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.316f, 0.316f);
-            tempTime += Time.deltaTime;
-            if (tempTime > recoilDuration)
-            {
-                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-                isShoot = false;
-                isMoving = true;
-                tempTime = 0;
-            }
+            isMoving = false;
+            isAttacking = false;
+            isShoot = false;
+            isDying = false;
         }
-
-        //Check if enemy is moving or attacking
-        if (isMoving && !isDying)
-            moveEnemy();
-        else if (isAttacking && !isDying)
+        else
         {
-            tempTime += Time.deltaTime;
-            if (tempTime > (1/attackRate))
+
+
+            //Check if enemy is being shoot, if yes, stop moving for recoilDuration
+            if (isShoot && !isDying)
             {
-                if (castle)     //Check if castle is destroyed
-                    attack(castle);
-                tempTime = 0;
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.316f, 0.316f);
+                tempTime += Time.deltaTime;
+                if (tempTime > recoilDuration)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                    isShoot = false;
+                    isMoving = true;
+                    tempTime = 0;
+                }
             }
-        }   
+
+
+            //Check if enemy is moving or attacking
+            if (isMoving && !isDying)
+                moveEnemy();
+            else if (isAttacking && !isDying)
+            {
+                tempTime += Time.deltaTime;
+                if (tempTime > (1 / attackRate))
+                {
+                    if (castle)     //Check if castle is destroyed
+                        attack(castle);
+                    tempTime = 0;
+                }
+            }
+
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,7 +96,9 @@ public class EnemyMechanics : MonoBehaviour
                 isShoot = true;
                 tempTime = 0;
                 step = recoilSpeed * Time.deltaTime;
+                moveRecoil();
                 enemyHealth -= bulletDamage;
+                controller.addScore((int)bulletDamage);
                 healthBar.decreaseHealthbar(bulletDamage);
                 if (enemyHealth <= 0)
                     die();
@@ -89,6 +113,21 @@ public class EnemyMechanics : MonoBehaviour
                 }
                 break;
          }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "castle":
+                stopMoving();
+                isAttacking = true;
+                if (collision.gameObject)   //Check if castle is destroyed
+                {
+                    attack(collision.gameObject);
+                }
+                break;
+        }
     }
 
     void moveEnemy()
@@ -127,6 +166,7 @@ public class EnemyMechanics : MonoBehaviour
     public void dealLighteningDamage()
     {
         float damage = 0;
+        moveRecoil();
         isShoot = true;
         tempTime = 0;
         step = recoilSpeed * Time.deltaTime;
@@ -142,12 +182,16 @@ public class EnemyMechanics : MonoBehaviour
         }
         enemyHealth -= damage;
         healthBar.decreaseHealthbar(damage);
+        controller.addScore((int)damage);
         if (enemyHealth <= 0)
             die();
     }
 
     public void die()
     {
+        //Add score to player
+        controller.addScore((int)maxHealth);
+
         //set controller of animator to death Effect
         gameObject.GetComponent<Animator>().SetBool("Die", true);
         healthBarObj.SetActive(false);

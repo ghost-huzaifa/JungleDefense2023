@@ -15,6 +15,11 @@ TagManager:
   - powerups
   - healthbarBackground
   - shooter
+  - spawner
+  - 1Star
+  - 2Star
+  - 3Star
+  - hand
   layers:
   - Default
   - TransparentFX
@@ -49,6 +54,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: TopLayer
+    uniqueID: 3582601631
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

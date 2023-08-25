@@ -9,14 +9,17 @@ public class HealthBar : MonoBehaviour
     public Image healthBarSprite;
     public float reduceSpeed = 0.5f;
 
+    private GameObject controller;
     private GameObject healthbarImage;
     private float target = 1, maxHealth, currentHealth;
 
     private void Start()
     {
+
         if (gameObject.tag == "castle")
         {
             healthbarImage = GameObject.FindGameObjectWithTag("healthbarBackground");
+            controller = GameObject.FindGameObjectWithTag("GameController");
             maxHealth = 1000f;
             currentHealth = 1000f;
         }
@@ -36,13 +39,20 @@ public class HealthBar : MonoBehaviour
         }
         if (gameObject.tag == "castle")
         {
-            if (healthBarSprite.fillAmount <= 0.66f)
+            if (healthBarSprite.fillAmount <= 0)
             {
-                healthbarImage.GetComponent<Image>().sprite = mediumHealthbar;
+                controller.GetComponent<Controller>().gameOver();
+                controller.GetComponent<Controller>().earnedStars = 0;
             }
-            if (healthBarSprite.fillAmount <= 0.33f)
+            else if (healthBarSprite.fillAmount <= 0.33f)
             {
                 healthbarImage.GetComponent<Image>().sprite = lowHealthbar;
+                controller.GetComponent<Controller>().earnedStars = 1;
+            }
+            else if (healthBarSprite.fillAmount <= 0.66f)
+            {
+                healthbarImage.GetComponent<Image>().sprite = mediumHealthbar;
+                controller.GetComponent<Controller>().earnedStars = 2;
             }
         }
     }

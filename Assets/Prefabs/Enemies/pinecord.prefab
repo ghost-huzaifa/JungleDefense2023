@@ -275,13 +275,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemySpeed: 0.1
-  recoilDuration: 0.15
+  recoilDuration: 0.2
   recoilAcceleration: 1.2
   recoilSpeed: 2
   enemyHealth: 350
   attackRate: 1
   bulletDamage: 30
-  spawnLocation: {x: 3.2716105, y: 4.315175, z: 0}
+  spawnLocation: {x: -3.686851, y: 2.9090488, z: 0}
   enemyType: pinecord
   isShoot: 0
   isMoving: 1

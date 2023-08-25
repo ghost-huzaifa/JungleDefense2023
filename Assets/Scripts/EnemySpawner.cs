@@ -8,7 +8,8 @@ public class EnemySpawner : MonoBehaviour
     public GameObject mushroom, bush, trashcan, pinecord, cat;
     public float Enemy_spawn_rate = 1;
 
-    private GameObject enemy;
+    private GameObject enemy, controller;
+    private bool allEnemiesSpawned = false;
     private float tempTime, attackRate, Ellipse_a = 7.5f, Ellipse_b = 4f;
     private int sign = -1, enemyCount = 0, enemyCountLimit;
     private string currentLevel;
@@ -16,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        controller = GameObject.FindGameObjectWithTag("GameController");
+
         switch(SceneManager.GetActiveScene().name)
         {
             case "Level 1":     currentLevel = "Level 1";   enemyCountLimit = 30;   break;
@@ -35,10 +38,10 @@ public class EnemySpawner : MonoBehaviour
     {
         //Check Count of Enemies and end level accordingly
         if (enemyCount > enemyCountLimit)
-            SceneManager.LoadScene("Level Select");
+            allEnemiesSpawned = true;
         
         //Spawn enemies according to the level
-        if (tempTime > (1/Enemy_spawn_rate))
+        if (tempTime > (1/Enemy_spawn_rate) && !allEnemiesSpawned)
         {
             switch (currentLevel)
             {
@@ -49,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
                 case "Level 5":     spawner(pinecord, trashcan, cat);     break;
                 default:            spawner(mushroom, bush, pinecord);    break;
             }
-
+            controller.GetComponent<Controller>().isGameStarted = true;
             tempTime = 0f;
         }
         else

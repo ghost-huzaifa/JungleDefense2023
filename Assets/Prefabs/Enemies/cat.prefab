@@ -200,13 +200,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemySpeed: 0.3
-  recoilDuration: 0.15
+  recoilDuration: 0.2
   recoilAcceleration: 1.2
   recoilSpeed: 2
   enemyHealth: 200
   attackRate: 1
   bulletDamage: 30
-  spawnLocation: {x: -2.2105749, y: -6.2506323, z: 0}
+  spawnLocation: {x: 3.9774046, y: 0.79605556, z: 0}
   enemyType: cat
   isShoot: 0
   isMoving: 1

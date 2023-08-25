@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Powerups : MonoBehaviour
 {
     public float lighteningCooldownTime = 5, fireBallCooldownTime = 7;
-    public GameObject lighteningButton, fireBallButton;
-    public bool fireBallTrigger = false;
+    public GameObject lighteningButton, fireBallButton, tutorialHand, tutorialShoot;
+    public bool fireBallTrigger = false, isGameOver = false, isFirstTime = true, isFirstShoot = true;
 
     private float lighteningTempTime, fireBallTempTime;
     private bool isLighteningCooldown = false, isFireBallCooldown = false;
@@ -16,31 +17,56 @@ public class Powerups : MonoBehaviour
     {
         lighteningButton = GameObject.FindGameObjectWithTag("lighteningButton");
         fireBallButton = GameObject.FindGameObjectWithTag("fireBallButton");
+        lighteningButton.GetComponent<Button>().interactable = false;
+        fireBallButton.GetComponent<Button>().interactable = false;
         lighteningTempTime = 0;
         fireBallTempTime = 0;
     }
 
     private void Update()
     {
-        lighteningTempTime += Time.deltaTime;
-        fireBallTempTime += Time.deltaTime;
-        if (lighteningTempTime >= lighteningCooldownTime)
+        if (isFirstShoot && SceneManager.GetActiveScene().buildIndex == 2)
         {
-            lighteningTempTime = 0;
-            isLighteningCooldown = false;
-            lighteningButton.GetComponent<Button>().interactable = true;
+            tutorialShoot.SetActive(true);
         }
-        if (fireBallTempTime >= fireBallCooldownTime)
+        if (isGameOver)
         {
-            fireBallTempTime = 0;
-            isFireBallCooldown = false;
-            fireBallButton.GetComponent<Button>().interactable = true;
+            lighteningButton.GetComponent<Button>().interactable = false;
+            fireBallButton.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            lighteningTempTime += Time.deltaTime;
+            fireBallTempTime += Time.deltaTime;
+            if (lighteningTempTime >= lighteningCooldownTime)
+            {
+                lighteningTempTime = 0;
+                isLighteningCooldown = false;
+                lighteningButton.GetComponent<Button>().interactable = true;
+
+                //For the first time, the hand will hover over the lightening button as a tutorial
+                if (isFirstTime && SceneManager.GetActiveScene().buildIndex == 2)
+                {
+                    tutorialHand.SetActive(true);
+                }
+            }
+            if (fireBallTempTime >= fireBallCooldownTime)
+            {
+                fireBallTempTime = 0;
+                isFireBallCooldown = false;
+                fireBallButton.GetComponent<Button>().interactable = true;
+            }
         }
     }
     public void lighteningPowerup()
     {
         if (!isLighteningCooldown)
         {
+            if(isFirstTime)
+            {
+                isFirstTime = false;
+                tutorialHand.SetActive(false);
+            }
             dealLighteningDamage();
             isLighteningCooldown = true;
             lighteningButton.GetComponent<Button>().interactable = false;
