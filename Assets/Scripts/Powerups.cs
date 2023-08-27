@@ -10,6 +10,7 @@ public class Powerups : MonoBehaviour
     public float lighteningCooldownTime = 5, fireBallCooldownTime = 7;
     public GameObject lighteningButton, fireBallButton, tutorialHand, tutorialShoot;
     public bool fireBallTrigger = false, isGameOver = false, isFirstTime = true, isFirstShoot = true;
+    public AudioClip lighteningSound;
 
     private float lighteningTempTime, fireBallTempTime;
     private bool isLighteningCooldown = false, isFireBallCooldown = false;
@@ -71,6 +72,9 @@ public class Powerups : MonoBehaviour
             isLighteningCooldown = true;
             lighteningButton.GetComponent<Button>().interactable = false;
             makeLighteningAnimation();
+            gameObject.GetComponent<AudioSource>().clip = lighteningSound;
+
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 

@@ -9,6 +9,7 @@ public class Shoot : MonoBehaviour
     public GameObject bullet, fireBall;
     public Transform firePoint;
     public float fireRate = 1f;
+    public AudioClip shootingSound, fireBallSound;
 
     private Vector3 worldMousePosition;
     private float tempTime = 0;
@@ -45,10 +46,16 @@ public class Shoot : MonoBehaviour
         {
             Instantiate(fireBall, firePoint.position, firePoint.rotation);
             powerupsInfo.fireBallTrigger = false;
+            gameObject.GetComponent<AudioSource>().clip = fireBallSound;
+
+            gameObject.GetComponent<AudioSource>().Play();
         }
         else
         {
             Instantiate(bullet, firePoint.position, firePoint.rotation);
+            gameObject.GetComponent<AudioSource>().clip = shootingSound;
+
+            gameObject.GetComponent<AudioSource>().Play();
         }
         powerupsInfo.tutorialShoot.SetActive(false);
         powerupsInfo.isFirstShoot = false;

@@ -20,6 +20,7 @@ public class Controller : MonoBehaviour
     public GameObject victoryScreenScoreObj;
     public GameObject uiScoreObj;
     public GameObject pauseScreenObj;
+    public AudioClip menuClip, deathClip;
 
 
     private void Start()
@@ -51,14 +52,20 @@ public class Controller : MonoBehaviour
     //Game Over and Victory Button Functions
     public void restartLevel()
     {
+        gameObject.GetComponent<AudioSource>().clip = menuClip;
+        gameObject.GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("Level " + currentLevel);
     }
     public void returnToLevelSelect()
     {
+        gameObject.GetComponent<AudioSource>().clip = menuClip;
+        gameObject.GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("Level Select");
     }
     public void nextLevel()
     {
+        gameObject.GetComponent<AudioSource>().clip = menuClip;
+        gameObject.GetComponent<AudioSource>().Play();
         if (currentLevel == 5)
             SceneManager.LoadScene("Level Select");
         else
@@ -114,6 +121,8 @@ public class Controller : MonoBehaviour
         setEnemiesSpawning(false);
         setShoot(false);
         setPowerups(false);
+        gameObject.GetComponent<AudioSource>().clip = deathClip;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
 
@@ -125,6 +134,8 @@ public class Controller : MonoBehaviour
         setEnemiesSpawning(false);
         setShoot(false);
         setPowerups(false);
+        gameObject.GetComponent<AudioSource>().clip = menuClip;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     //Resume Button Function
@@ -135,6 +146,8 @@ public class Controller : MonoBehaviour
         setEnemiesSpawning(true);
         setShoot(true);
         setPowerups(true);
+        gameObject.GetComponent<AudioSource>().clip = menuClip;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
 
@@ -146,6 +159,7 @@ public class Controller : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             enemy.GetComponent<EnemyMechanics>().isGameOver = !value;
+            enemy.GetComponent<EnemyMechanics>().isMoving = value;
         }
     }
 

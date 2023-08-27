@@ -8,6 +8,7 @@ public class HealthBar : MonoBehaviour
     public Sprite mediumHealthbar, lowHealthbar;
     public Image healthBarSprite;
     public float reduceSpeed = 0.5f;
+    public AudioClip castleDamage, enemyDamage;
 
     private GameObject controller;
     private GameObject healthbarImage;
@@ -28,6 +29,16 @@ public class HealthBar : MonoBehaviour
     {
         currentHealth -= damage;
         target = currentHealth / maxHealth;
+        if (gameObject.tag == "castle")
+        {
+            gameObject.GetComponent<AudioSource>().clip = castleDamage;
+        }
+        else if (gameObject.tag == "enemy")
+        {
+            gameObject.GetComponent<AudioSource>().clip = enemyDamage;
+        }
+
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     void Update()

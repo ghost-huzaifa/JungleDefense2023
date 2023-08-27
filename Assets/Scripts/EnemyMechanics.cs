@@ -13,6 +13,7 @@ public class EnemyMechanics : MonoBehaviour
     public GameObject healthBarObj;
     public Controller controller;
     public Collider2D enemyCollider;
+    public AudioClip enemySound;
 
     //Script Variables
     private HealthBar healthBar;
@@ -36,6 +37,11 @@ public class EnemyMechanics : MonoBehaviour
 
         //Set Maximum Health
         maxHealth = enemyHealth;
+
+        //Set Movement Sound
+        gameObject.GetComponent<AudioSource>().clip = enemySound;
+        gameObject.GetComponent<AudioSource>().Play();
+        Debug.Log("Played");
     }
     void Update()
     {
@@ -48,8 +54,6 @@ public class EnemyMechanics : MonoBehaviour
         }
         else
         {
-
-
             //Check if enemy is being shoot, if yes, stop moving for recoilDuration
             if (isShoot && !isDying)
             {
